@@ -1,13 +1,13 @@
-﻿using System;
 using System.IO;
 using HWLib.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HWConsole {
-  class Program {
-
-    static void Main(string[] args) {
-      
+namespace UnitTestHW {
+  [TestClass]
+  public class HWUnitTest {
+    [TestMethod]
+    public void TestMessageService() {
       var di = new DirectoryInfo(".");
       var builder = new ConfigurationBuilder()
         .SetBasePath(Path.Combine(di.FullName))
@@ -18,9 +18,15 @@ namespace HWConsole {
 
       var MS = new MessageService(configuration);
 
-      Console.WriteLine(MS.CreateMessage());
-      //Console.WriteLine(MS.CreateMessage("Test Message"));
-      Console.ReadLine();
+
+      var expected = "Hello World!";
+
+      var actual = MS.CreateMessage();
+
+      Equals(expected, actual);
+
+
     }
+
   }
 }
